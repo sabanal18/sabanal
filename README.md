@@ -13,6 +13,13 @@ public struct Time
         this.minutes = 60 * hh + mm;
     }
 
+    public Time(int totalMinutes)
+    {
+        int hours = totalMinutes / 60 % 24;
+        int mins = totalMinutes % 60;
+        this.minutes = hours * 60 + mins;
+    }
+
     public int Hour => minutes / 60;
     public int Minute => minutes % 60;
 
@@ -20,23 +27,31 @@ public struct Time
     {
         return $"{Hour:D2}:{Minute:D2}";
     }
+
+    public static Time operator +(Time t1, Time t2)
+    {
+        return new Time(t1.minutes + t2.minutes);
+    }
+
+    public static Time operator -(Time t1, Time t2)
+    {
+        return new Time(t1.minutes - t2.minutes);
+    }
 }
 
 class Program
 {
     static void Main()
     {
-        Time time1 = new Time(10, 5);
-        Time time2 = new Time(0, 45);
-        Time time3 = new Time(23, 45);
+        Time time1 = new Time(10, 30);
+        Time time2 = new Time(2, 45);
+
+        Time sum = time1 + time2;
+        Time difference = time1 - time2;
 
         Console.WriteLine("Time 1: " + time1);
         Console.WriteLine("Time 2: " + time2);
-        Console.WriteLine("Time 3: " + time3);
-
-        Console.WriteLine("Time 1 Hour: " + time1.Hour);
-        Console.WriteLine("Time 1 Minute: " + time1.Minute);
-        Console.WriteLine("Time 3 Hour: " + time3.Hour);
-        Console.WriteLine("Time 3 Minute: " + time3.Minute);
+        Console.WriteLine("Sum: " + sum);
+        Console.WriteLine("Difference: " + difference);
     }
 }
