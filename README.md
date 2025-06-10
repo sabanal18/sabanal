@@ -28,14 +28,14 @@ public struct Time
         return $"{Hour:D2}:{Minute:D2}";
     }
 
-    public static Time operator +(Time t1, Time t2)
+    public static implicit operator Time(int minutes)
     {
-        return new Time(t1.minutes + t2.minutes);
+        return new Time(minutes);
     }
 
-    public static Time operator -(Time t1, Time t2)
+    public static explicit operator int(Time time)
     {
-        return new Time(t1.minutes - t2.minutes);
+        return time.minutes;
     }
 }
 
@@ -44,14 +44,12 @@ class Program
     static void Main()
     {
         Time time1 = new Time(10, 30);
-        Time time2 = new Time(2, 45);
-
-        Time sum = time1 + time2;
-        Time difference = time1 - time2;
+        Time time2 = 605; // implicit conversion from int to Time
 
         Console.WriteLine("Time 1: " + time1);
         Console.WriteLine("Time 2: " + time2);
-        Console.WriteLine("Sum: " + sum);
-        Console.WriteLine("Difference: " + difference);
+
+        int minutes = (int)time1; // explicit conversion from Time to int
+        Console.WriteLine("Time 1 in minutes: " + minutes);
     }
 }
