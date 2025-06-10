@@ -1,55 +1,34 @@
 using System;
 
-public class StudentGrades
+public struct Time
 {
-    public static void Main(string[] args)
+    private readonly int minutes;
+
+    public Time(int hh, int mm)
     {
-        // Declare and initialize a 2D array to store grades for 5 students across 3 subjects.
-        int[,] grades = {
-            {85, 92, 78},
-            {90, 88, 95},
-            {76, 80, 85},
-            {92, 98, 89},
-            {88, 75, 90}
-        };
-
-        // Display all the grades in a matrix form.
-        Console.WriteLine("Student Grades:");
-        for (int i = 0; i < grades.GetLength(0); i++)
+        if (hh < 0 || hh > 23 || mm < 0 || mm > 59)
         {
-            for (int j = 0; j < grades.GetLength(1); j++)
-            {
-                Console.Write(grades[i, j] + "\t");
-            }
-            Console.WriteLine();
+            throw new ArgumentException("Invalid time");
         }
+        this.minutes = 60 * hh + mm;
+    }
 
-        // Calculate and display the average grade for each student.
-        Console.WriteLine("\nAverage Grades:");
-        for (int i = 0; i < grades.GetLength(0); i++)
-        {
-            double sum = 0;
-            for (int j = 0; j < grades.GetLength(1); j++)
-            {
-                sum += grades[i, j];
-            }
-            double average = sum / grades.GetLength(1);
-            Console.WriteLine($"Student {i + 1}: {average:F2}");
-        }
+    public override string ToString()
+    {
+        int hours = minutes / 60;
+        int mins = minutes % 60;
+        return $"{hours:D2}:{mins:D2} ({minutes} minutes since midnight)";
+    }
+}
 
-        // Find the highest grade for each subject and display the result.
-        Console.WriteLine("\nHighest Grades per Subject:");
-        for (int j = 0; j < grades.GetLength(1); j++)
-        {
-            int highest = grades[0, j];
-            for (int i = 1; i < grades.GetLength(0); i++)
-            {
-                if (grades[i, j] > highest)
-                {
-                    highest = grades[i, j];
-                }
-            }
-            Console.WriteLine($"Subject {j + 1}: {highest}");
-        }
+class Program
+{
+    static void Main()
+    {
+        Time time1 = new Time(10, 5);
+        Time time2 = new Time(0, 45);
+
+        Console.WriteLine("Time 1: " + time1);
+        Console.WriteLine("Time 2: " + time2);
     }
 }
