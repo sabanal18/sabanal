@@ -13,11 +13,12 @@ public struct Time
         this.minutes = 60 * hh + mm;
     }
 
+    public int Hour => minutes / 60;
+    public int Minute => minutes % 60;
+
     public override string ToString()
     {
-        int hours = minutes / 60;
-        int mins = minutes % 60;
-        return $"{hours:D2}:{mins:D2} ({minutes} minutes since midnight)";
+        return $"{Hour:D2}:{Minute:D2}";
     }
 }
 
@@ -27,8 +28,15 @@ class Program
     {
         Time time1 = new Time(10, 5);
         Time time2 = new Time(0, 45);
+        Time time3 = new Time(23, 45);
 
         Console.WriteLine("Time 1: " + time1);
         Console.WriteLine("Time 2: " + time2);
+        Console.WriteLine("Time 3: " + time3);
+
+        Console.WriteLine("Time 1 Hour: " + time1.Hour);
+        Console.WriteLine("Time 1 Minute: " + time1.Minute);
+        Console.WriteLine("Time 3 Hour: " + time3.Hour);
+        Console.WriteLine("Time 3 Minute: " + time3.Minute);
     }
 }
